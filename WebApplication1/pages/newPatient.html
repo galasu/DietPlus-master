@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <style>
+        html, body, h1, h2, h3, h4, h5 {
+            font-family: "Raleway", sans-serif
+        }
+
+        label {
+            float: right
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#pForm").submit(f1);
+        });
+
+        function f1() {
+            AddPatient();
+            return false;
+        };
+
+
+        function AddPatient() {
+
+            Patient = {
+
+                Name: $("#name").val(),
+                Id: $("#idNumber").val(),
+                DateOfBirth: $("#dateOfBirth").val(),
+                age: getAge(DateOfBirth.toString()),
+                ContactName: $("#contactName").val(),
+                ContactRelation: $("contactRelation").val(),
+                PhoneContact: $("#phoneContact").val(),
+                Height: $("height").val(),
+                Weight: $("#weight").val(),
+                Diseases: $("diseases").val(),
+                Texture: $("input[name='texture']:checked").val(),
+                Sensetivity: $("input[name='sensetivity']:checked"),
+                Clasification: $("#clasification").val(),
+                Comments: $("#comments").val(),
+
+
+            }
+
+            ajaxCall("POST", "../api/patients", JSON.stringify(Patient), success, error);
+
+
+        }
+        function success() {
+            alert("insert success");
+        }
+
+        function error() {
+            alert("insert fail");
+        }
+
+        function getAge(dateString) {
+            var today = new Date();
+            var birthDate = new Date(dateString);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+
+    </script>
+</head>
+
+
+<body class="w3-light-grey">
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4" >
+        <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+        <span>Diet +</span>
+    </div>
+
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar">
+        <br>
+        <div class="w3-container w3-row">
+            <div class="w3-col s4">
+                <img src="../images/nutrition.png" class="w3-circle w3-margin-right" style="width:46px">
+            </div>
+            <div class="w3-col s8 w3-bar">
+                <span>שלום, <strong>הילה</strong></span><br>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+            </div>
+        </div>
+        <hr>
+        <div class="w3-container">
+            <h5>Dashboard</h5>
+        </div>
+        <div class="w3-bar-block">
+            <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  ראשי</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  צפייה במטופל</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Traffic</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Geo</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Orders</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  News</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  General</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+        </div>
+    </nav>
+
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+
+    <form id="pForm" method="post" class="contentcontainer med left" style="margin-left:500px; margin-top: 100px;">
+        <div id="containerD">
+            <p>
+                <label>מטופל חדש</label><br>
+
+            <p>
+                <label>:שם פרטי</label>
+                <input type="text" name="firstName">
+            </p>
+            <p>
+                <label>:שם משפחה</label>
+                <input type="text" name="lastName">
+            </p>
+            <p>
+                <label>:תעודת זהות</label>
+                <input type="text" name="idNumber">
+            </p>
+            <p>
+                <label>תאריך לידה</label>
+                <input type="date" name="dateOfBirth" required>
+            </p>
+            <p>
+                <label>:איש קשר</label>
+                <input type="text" name="contactName">
+            </p>
+            <p>
+                <label>:קרבה</label>
+                <input type="text" name="contactRelation">
+            </p>
+            <p>
+                <label>:טלפון איש קשר</label>
+                <input type="tel" name="phoneContact">
+            </p>
+            <p>
+                <label>:גובה</label>
+                <input type="text" name="height">
+            </p>
+            <p>
+                <label>:משקל</label>
+                <input type="text" name="weight">
+            </p>
+            <p>
+                <label>:מחלות</label>
+                <input type="text" name="diseases">
+            </p>
+            <label>מרקם מזון</label>
+            <label>
+                <input type="radio" name="texture" value="regular" id="1">
+                רגיל
+            </label><br />
+            <label>
+                <input type="radio" name="texture" value="soft" id="2">
+                רך
+            </label><br />
+            <label>
+                <input type="radio" name="texture" value="blender" id="3">
+                בלנדר
+            </label><br />
+
+
+            <p>
+                <label>רגישויות</label>
+                <input type="checkbox" name="sensetivity" value="sugar"> ללא סוכר<br>
+                <input type="checkbox" name="sensetivity" value="gluten"> ללא גלוטן<br />
+                <input type="checkbox" name="sensetivity" value="lactose"> ללא לקטוז<br />
+                <input type="checkbox" name="sensetivity" value="vegetarian"> צמחוני<br />
+
+            </p>
+            <p>
+                <label>סיווג מטופל</label>
+                <select id="clasification">
+                    <option>עצמאי</option>
+                    <option>סיעודי</option>
+                    <option>תשוש</option>
+                </select>
+            </p>
+            <p>
+                <label>:הערות נוספות</label>
+                <input type="text" name="comments">
+            </p>
+            <div class="form-group">
+                <!--<button class="btn btn-default" id="add" onclick="f1(); return false;">Add</button>-->
+                <input type="submit" value="Submit BTN" />
+            </div>
+        </div>
+    </form>
+</body>
+</html>

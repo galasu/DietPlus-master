@@ -1,0 +1,25 @@
+﻿body {
+    background: #fdfdfd;
+}
+
+
+.imgNav{
+    margin-right:750px;
+   
+  
+}
+
+#nameNav{
+    font-size:small;
+    float:left;
+}
+
+h6 {
+    font-size: small;
+    display: inline;
+}
+.navFont{
+    font-size:small;
+}
+
+
